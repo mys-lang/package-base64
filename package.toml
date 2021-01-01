@@ -1,0 +1,5 @@
+[package]
+name = "base64"
+version = "0.1.0"
+authors = ["Erik Moqvist <erik.moqvist@gmail.com>"]
+description = "Base 64 encoding and decoding."
