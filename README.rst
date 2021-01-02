@@ -15,4 +15,4 @@ Examples
        print(encode(b"foo"))
        print(decode("Zm9v"))
 
-.. _Mys programming language: https://github.com/eerimoq/mys
+.. _Mys programming language: https://github.com/mys-lang/mys
