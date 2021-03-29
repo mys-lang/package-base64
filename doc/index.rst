@@ -1,7 +1,9 @@
+|test|_
+
 About
 =====
 
-Base64 encoding and decoding in the `Mys programming language`_.
+Base64 encoding and decoding.
 
 Project: https://github.com/mys-lang/package-base64
 
@@ -22,4 +24,5 @@ Functions and types
 
 .. mysfile:: src/lib.mys
 
-.. _Mys programming language: https://mys.readthedocs.io/en/latest/
+.. |test| image:: https://github.com/mys-lang/package-base64/actions/workflows/pythonpackage.yml/badge.svg
+.. _test: https://github.com/mys-lang/package-base64/actions/workflows/pythonpackage.yml
