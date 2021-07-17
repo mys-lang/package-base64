@@ -19,8 +19,8 @@ Example
        print(encode(b"foo"))
        print(decode("Zm9v"))
 
-Functions and types
-===================
+API
+===
 
 .. mysfile:: src/lib.mys
 
