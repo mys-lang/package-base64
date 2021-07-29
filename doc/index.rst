@@ -10,6 +10,8 @@ Project: https://github.com/mys-lang/package-base64
 Example
 =======
 
+The code:
+
 .. code-block:: python
 
    from base64 import encode
@@ -18,6 +20,16 @@ Example
    def main():
        print(encode(b"foo"))
        print(decode("Zm9v"))
+
+Build and run:
+
+.. code-block:: text
+
+   $ mys run
+    ✔ Reading package configuration (0 seconds)
+    ✔ Building (0.58 seconds)
+   Zm9v
+   b"\x66\x6f\x6f"
 
 API
 ===
