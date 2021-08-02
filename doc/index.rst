@@ -14,7 +14,7 @@ Example
 
 The code:
 
-.. code-block:: python
+.. code-block:: mys
 
    from base64 import encode
    from base64 import decode
@@ -25,9 +25,9 @@ The code:
 
 Build and run:
 
-.. code-block:: text
+.. code-block:: myscon
 
-   $ mys run
+   ❯ mys run
     ✔ Reading package configuration (0 seconds)
     ✔ Building (0.58 seconds)
    Zm9v
