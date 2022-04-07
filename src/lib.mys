@@ -1,16 +1,16 @@
-def _index_to_encoded(index: u8) -> char:
+def _index_to_encoded(index: u8) -> u8:
     if 0 <= index and index <= 25:
-        return char(i32('A') + i32(index) - 0)
+        return u8(i32('A') + i32(index) - 0)
     elif 26 <= index and index <= 51:
-        return char(i32('a') + i32(index) - 26)
+        return u8(i32('a') + i32(index) - 26)
     elif 52 <= index and index <= 61:
-        return char(i32('0') + i32(index) - 52)
+        return u8(i32('0') + i32(index) - 52)
     elif index == 62:
-        return '+'
+        return u8(i32('+'))
     elif index == 63:
-        return '/'
+        return u8(i32('/'))
     else:
-        return '='
+        return u8(i32('='))
 
 def _encoded_to_index(encoded: char) -> u8:
     if 'A' <= encoded and encoded <= 'Z':
@@ -33,7 +33,7 @@ def encode(data: bytes) -> string:
 
     """
 
-    encoded = ""
+    encoded = b""
     length = i64(len(data))
 
     for i in range(0, length, 3):
@@ -59,10 +59,10 @@ def encode(data: bytes) -> string:
             encoded += _index_to_encoded(64)
             encoded += _index_to_encoded(64)
 
-    return encoded
+    return string(encoded)
 
 def decode(data: string) -> bytes:
-    """Decode given base64 encoded string.
+    """Decode given base64 encoded data.
 
     """
 
