@@ -18,10 +18,14 @@ The code:
 
    from base64 import encode
    from base64 import decode
+   from base64 import encode_bytes
+   from base64 import decode_bytes
 
    def main():
-       print(encode(b"foo"))
-       print(decode("Zm9v"))
+       print("Encoded:      ", encode(b"foo"))
+       print("Decoded:      ", decode("Zm9v"))
+       print("Encoded bytes:", encode_bytes(b"foo"))
+       print("Decoded bytes:", decode_bytes(b"Zm9v"))
 
 Build and run:
 
@@ -30,8 +34,10 @@ Build and run:
    ❯ mys run
     ✔ Reading package configuration (0 seconds)
     ✔ Building (0.58 seconds)
-   Zm9v
-   b"\x66\x6f\x6f"
+   Encoded:       Zm9v
+   Decoded:       b"\x66\x6f\x6f"
+   Encoded bytes: b"\x5a\x6d\x39\x76"
+   Decoded bytes: b"\x66\x6f\x6f"
 
 API
 ===
