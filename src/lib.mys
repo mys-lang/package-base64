@@ -12,18 +12,18 @@ def _index_to_encoded(index: u8) -> u8:
     else:
         return u8(i32('='))
 
-def _encoded_to_index(encoded: char) -> u8:
-    if 'A' <= encoded and encoded <= 'Z':
-        return u8(0 + i32(encoded) - i32('A'))
-    elif 'a' <= encoded and encoded <= 'z':
-        return u8(26 + i32(encoded) - i32('a'))
-    elif '0' <= encoded and encoded <= '9':
-        return u8(52 + i32(encoded) - i32('0'))
-    elif encoded == '+':
+def _encoded_to_index(encoded: u8) -> u8:
+    if u8(i32('A')) <= encoded and encoded <= u8(i32('Z')):
+        return encoded - u8(i32('A'))
+    elif u8(i32('a')) <= encoded and encoded <= u8(i32('z')):
+        return 26 + encoded - u8(i32('a'))
+    elif u8(i32('0')) <= encoded and encoded <= u8(i32('9')):
+        return 52 + encoded - u8(i32('0'))
+    elif encoded == u8(i32('+')):
         return 62
-    elif encoded == '/':
+    elif encoded == u8(i32('/')):
         return 63
-    elif encoded == '=':
+    elif encoded == u8(i32('=')):
         return 64
     else:
         raise ValueError()
@@ -33,8 +33,23 @@ def encode(data: bytes) -> string:
 
     """
 
+    return string(encode_bytes(data))
+
+def decode(data: string) -> bytes:
+    """Decode given base64 encoded data.
+
+    """
+
+    return decode_bytes(data.to_utf8())
+
+def encode_bytes(data: bytes) -> bytes:
+    """Encode given data.
+
+    """
+
     encoded = b""
     length = i64(len(data))
+    encoded.reserve((4 * length + 2) / 3)
 
     for i in range(0, length, 3):
         index = (data[i + 0] & 0xfc) >> 2
@@ -59,9 +74,9 @@ def encode(data: bytes) -> string:
             encoded += _index_to_encoded(64)
             encoded += _index_to_encoded(64)
 
-    return string(encoded)
+    return encoded
 
-def decode(data: string) -> bytes:
+def decode_bytes(data: bytes) -> bytes:
     """Decode given base64 encoded data.
 
     """
@@ -72,6 +87,7 @@ def decode(data: string) -> bytes:
         raise ValueError()
 
     decoded = b""
+    decoded.reserve(3 * length / 4)
 
     for i in range(0, length, 4):
         v0 = _encoded_to_index(data[i + 0])
@@ -124,3 +140,35 @@ def test_various():
     for encoded, decoded in datas:
         assert encode(decoded) == encoded
         assert decode(encoded) == decoded
+
+@test
+def test_various_bytes():
+    datas = [
+        (b"", b""),
+        (b"Zg==", b"f"),
+        (b"Zm8=", b"fo"),
+        (b"Zm9v", b"foo"),
+        (b"Zm9vYg==", b"foob"),
+        (b"Zm9vYmE=", b"fooba"),
+        (b"Zm9vYmFy", b"foobar"),
+        (
+            b"TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCB"
+            b"ieSB0aGlzIHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaC"
+            b"BpcyBhIGx1c3Qgb2YgdGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZ"
+            b"GVsaWdodCBpbiB0aGUgY29udGludWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRp"
+            b"b24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRoZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW5"
+            b"5IGNhcm5hbCBwbGVhc3VyZS4=",
+            b"Man is distinguished, not only by his reason, but by this singular"
+            b" passion from other animals, which is a lust of the mind, that by "
+            b"a perseverance of delight in the continued and indefatigable gener"
+            b"ation of knowledge, exceeds the short vehemence of any carnal plea"
+            b"sure."
+        ),
+        (b"TQ==", b"M"),
+        (b"TWE=", b"Ma"),
+        (b"TWFu", b"Man")
+    ]
+
+    for encoded, decoded in datas:
+        assert encode_bytes(decoded) == encoded
+        assert decode_bytes(encoded) == decoded
