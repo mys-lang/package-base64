@@ -49,7 +49,7 @@ def encode_bytes(data: bytes) -> bytes:
 
     encoded = b""
     length = i64(len(data))
-    encoded.reserve((4 * length + 2) / 3)
+    encoded.reserve(4 * ((length + 2) / 3))
 
     for i in range(0, length, 3):
         index = (data[i + 0] & 0xfc) >> 2
