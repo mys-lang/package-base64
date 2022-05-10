@@ -21,7 +21,7 @@ The code:
    from base64 import encode_bytes
    from base64 import decode_bytes
 
-   def main():
+   func main():
        print("Encoded:      ", encode(b"foo"))
        print("Decoded:      ", decode("Zm9v"))
        print("Encoded bytes:", encode_bytes(b"foo"))

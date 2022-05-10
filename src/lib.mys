@@ -1,4 +1,4 @@
-def _index_to_encoded(index: u8) -> u8:
+func _index_to_encoded(index: u8) -> u8:
     if 0 <= index and index <= 25:
         return u8(i32('A') + i32(index) - 0)
     elif 26 <= index and index <= 51:
@@ -12,7 +12,7 @@ def _index_to_encoded(index: u8) -> u8:
     else:
         return u8(i32('='))
 
-def _encoded_to_index(encoded: u8) -> u8:
+func _encoded_to_index(encoded: u8) -> u8:
     if u8(i32('A')) <= encoded and encoded <= u8(i32('Z')):
         return encoded - u8(i32('A'))
     elif u8(i32('a')) <= encoded and encoded <= u8(i32('z')):
@@ -28,21 +28,21 @@ def _encoded_to_index(encoded: u8) -> u8:
     else:
         raise ValueError()
 
-def encode(data: bytes) -> string:
+func encode(data: bytes) -> string:
     """Encode given data.
 
     """
 
     return string(encode_bytes(data))
 
-def decode(data: string) -> bytes:
+func decode(data: string) -> bytes:
     """Decode given base64 encoded data.
 
     """
 
     return decode_bytes(data.to_utf8())
 
-def encode_bytes(data: bytes) -> bytes:
+func encode_bytes(data: bytes) -> bytes:
     """Encode given data.
 
     """
@@ -76,7 +76,7 @@ def encode_bytes(data: bytes) -> bytes:
 
     return encoded
 
-def decode_bytes(data: bytes) -> bytes:
+func decode_bytes(data: bytes) -> bytes:
     """Decode given base64 encoded data.
 
     """
@@ -110,7 +110,7 @@ def decode_bytes(data: bytes) -> bytes:
     return decoded
 
 @test
-def test_various():
+func test_various():
     datas = [
         ("", b""),
         ("Zg==", b"f"),
@@ -142,7 +142,7 @@ def test_various():
         assert decode(encoded) == decoded
 
 @test
-def test_various_bytes():
+func test_various_bytes():
     datas = [
         (b"", b""),
         (b"Zg==", b"f"),
