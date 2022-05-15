@@ -35,9 +35,9 @@ Build and run:
     ✔ Reading package configuration (0 seconds)
     ✔ Building (0.58 seconds)
    Encoded:       Zm9v
-   Decoded:       b"\x66\x6f\x6f"
-   Encoded bytes: b"\x5a\x6d\x39\x76"
-   Decoded bytes: b"\x66\x6f\x6f"
+   Decoded:       b"foo"
+   Encoded bytes: b"Zm9v"
+   Decoded bytes: b"foo"
 
 API
 ===
