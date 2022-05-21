@@ -1,3 +1,6 @@
+class Base64Error(Error):
+    message: string
+
 func _index_to_encoded(index: u8) -> u8:
     if 0 <= index and index <= 25:
         return u8(i32('A') + i32(index) - 0)
@@ -26,7 +29,7 @@ func _encoded_to_index(encoded: u8) -> u8:
     elif encoded == u8(i32('=')):
         return 64
     else:
-        raise ValueError()
+        raise Base64Error(f"Invalid value {encoded}.")
 
 func encode(data: bytes) -> string:
     """Encode given data.
@@ -84,7 +87,7 @@ func decode_bytes(data: bytes) -> bytes:
     length = i64(len(data))
 
     if (length % 4) != 0:
-        raise ValueError()
+        raise Base64Error(f"Length {length} not multiple of 4.")
 
     decoded = b""
     decoded.reserve(3 * length / 4)
@@ -96,7 +99,7 @@ func decode_bytes(data: bytes) -> bytes:
         v3 = _encoded_to_index(data[i + 3])
 
         if v0 == 64 or v1 == 64:
-            raise ValueError()
+            raise Base64Error(f"Bad value 64 at first of second index.")
         elif v2 == 64:
             decoded += (v0 << 2) | (v1 >> 4)
         elif v3 == 64:
@@ -172,3 +175,25 @@ func test_various_bytes():
     for encoded, decoded in datas:
         assert encode_bytes(decoded) == encoded
         assert decode_bytes(encoded) == decoded
+
+@test
+func test_decode_bad_length():
+    try:
+        decode("1")
+        assert False
+    except Base64Error as error:
+        assert error.message == "Length 1 not multiple of 4."
+
+@test
+func test_decode_bad_value():
+    try:
+        decode_bytes(b"-234")
+        assert False
+    except Base64Error as error:
+        assert error.message == "Invalid value 45."
+
+    try:
+        decode_bytes(b"====")
+        assert False
+    except Base64Error as error:
+        assert error.message == "Bad value 64 at first of second index."
