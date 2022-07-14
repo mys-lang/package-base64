@@ -112,8 +112,7 @@ func decode_bytes(data: bytes) -> bytes:
 
     return decoded
 
-@test
-func test_various():
+test various():
     datas = [
         ("", b""),
         ("Zg==", b"f"),
@@ -144,8 +143,7 @@ func test_various():
         assert encode(decoded) == encoded
         assert decode(encoded) == decoded
 
-@test
-func test_various_bytes():
+test various_bytes():
     datas = [
         (b"", b""),
         (b"Zg==", b"f"),
@@ -176,16 +174,14 @@ func test_various_bytes():
         assert encode_bytes(decoded) == encoded
         assert decode_bytes(encoded) == decoded
 
-@test
-func test_decode_bad_length():
+test decode_bad_length():
     try:
         decode("1")
         assert False
     except Base64Error as error:
         assert error.message == "Length 1 not multiple of 4."
 
-@test
-func test_decode_bad_value():
+test decode_bad_value():
     try:
         decode_bytes(b"-234")
         assert False
