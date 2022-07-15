@@ -51,7 +51,7 @@ func encode_bytes(data: bytes) -> bytes:
     """
 
     encoded = b""
-    length = i64(len(data))
+    length = data.length()
     encoded.reserve(4 * ((length + 2) / 3))
 
     for i in range(0, length, 3):
@@ -84,7 +84,7 @@ func decode_bytes(data: bytes) -> bytes:
 
     """
 
-    length = i64(len(data))
+    length = data.length()
 
     if (length % 4) != 0:
         raise Base64Error(f"Length {length} not multiple of 4.")
